@@ -15,6 +15,7 @@ namespace BTL.Controllers
 
         public IActionResult Index()
         {
+            //hi
             return View();
         }
 
