@@ -15,9 +15,6 @@ namespace BTL.Controllers
 
         public IActionResult Index()
         {
-            //Dũng commit
-            //BTL Web
-            // origin branch
             return View();
         }
 
