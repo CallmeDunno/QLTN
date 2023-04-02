@@ -2,8 +2,214 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@model List<ThongTinNha>
+@{
+    List<ChuNha> chus = ViewBag.chuNhas;
+    var rnd = new Random();
+    var ranNha = Model.OrderBy(item => rnd.Next());
+    var ranChu = chus.OrderBy(item => rnd.Next());
+}
+<!-- ======= Intro Section ======= -->
+<div class="intro intro-carousel swiper position-relative">
+    <div class="swiper-wrapper">
+        @{
+            int i = 0;
+            foreach (var item in ranNha)
+            {
+                i++;
+                if (i == 6)
+                {
+                    break;
+                }
+                @await Html.PartialAsync("_PartialSlideHome", item)
+                ;
+            }
+        }
+    </div>
+    <div class="swiper-pagination"></div>
 </div>
+<!-- End Intro Section -->
+
+<main id="main">
+    <!-- ======= Latest Properties Section ======= -->
+    <section class="section-property section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Danh sách nhà</h2>
+                        </div>
+                        <div class="title-link">
+                            <a asp-controller="House">
+                                Tất cả nhà
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="property-carousel" class="swiper">
+                <div class="swiper-wrapper">
+                    @{
+                        int j = 0;
+                        foreach (var item in ranNha)
+                        {
+                            j++;
+                            if (j == 6)
+                            {
+                                break;
+                            }
+                            <div class="carousel-item-b swiper-slide">
+                                <div class="card-box-a card-shadow carousel-item-a">
+                                    <div class="img-box-a">
+                                        <img src="../Images/@item.AnhMinhHoa" alt="" class="img-a img-fluid">
+                                    </div>
+                                    <div class="card-overlay">
+                                        <div class="card-overlay-a-content">
+                                            <div class="card-header-a">
+                                                <h2 class="card-title-a">
+                                                    <a href="property-single.html">
+                                                        <span class="color-b"> @item.DiaChiNha</span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                            <div class="card-body-a">
+                                                <div class="price-box d-flex">
+                                                    <span class="price-a">Giá phòng | @item.GiaPhong.ToString("#,##0") VND</span>
+                                                </div>
+                                                <a href="#" class="link-a">
+                                                    Nhấn để xem chi tiết
+                                                    <span class="bi bi-chevron-right"></span>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer-a">
+                                                <ul class="card-info d-flex justify-content-around">
+                                                    <li>
+                                                        <h4 class="card-info-title">Diện tích</h4>
+                                                        <span>
+                                                            @item.DienTich
+                                                            <sup>2</sup>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền điện</h4>
+                                                        <span>@item.TienDien.ToString("#,##0") VND</span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền nước</h4>
+                                                        <span>@item.TienNuoc.ToString("#,##0") VND</span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền đặt cọc</h4>
+                                                        <span>@item.TienDatCoc.ToString("#,##0") VND</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="propery-carousel-pagination carousel-pagination"></div>
+
+        </div>
+    </section><!-- End Latest Properties Section -->
+    <!-- ======= Agents Section ======= -->
+    <section class="section-agents section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Chủ nhà</h2>
+                        </div>
+                        <div class="title-link">
+                            <a href="agents-grid.html">
+                                Tất cả chủ nhà
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @{
+                    int indexChu = 0;
+                    foreach (var item in ranChu)
+                    {
+                        indexChu++;
+                        if (indexChu == 4)
+                        {
+                            break;
+                        }
+                        <div class="col-md-4">
+                            <div class="card-box-d ">
+                                <div class="card-img-d carousel-item-a">
+                                    <img src="@Url.Content("../Images/chu/" + item.AnhChuNha)" alt="" class="img-d img-fluid">
+                                </div>
+                                <div class="card-overlay card-overlay-hover">
+                                    <div class="card-header-d">
+                                        <div class="card-title-d align-self-center">
+                                            <h3 class="title-d">
+                                                <a href="agent-single.html" class="link-two">
+                                                    @item.TenChuNha
+                                                </a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body-d">
+                                        <p class="content-d color-text-a">
+                                            @item.MoTaChuNha
+                                        </p>
+                                        <div class="info-agents color-a">
+                                            <p>
+                                                <strong>Số điện thoại: </strong> @item.SdtchuNha
+                                            </p>
+                                            <p>
+                                                <strong>Email: </strong> @item.Email
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer-d">
+                                        <div class="socials-footer d-flex justify-content-center">
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item">
+                                                    <a href="#" class="link-one">
+                                                        <i class="bi bi-facebook" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#" class="link-one">
+                                                        <i class="bi bi-twitter" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#" class="link-one">
+                                                        <i class="bi bi-instagram" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="#" class="link-one">
+                                                        <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section><!-- End Agents Section -->
+
+</main>
+<!-- End #main -->

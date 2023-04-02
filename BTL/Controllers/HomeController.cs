@@ -8,6 +8,8 @@ namespace BTL.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        QltnContext db = new QltnContext();
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,9 +17,12 @@ namespace BTL.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<ThongTinNha> nhas = db.ThongTinNhas.ToList();
+            List<ChuNha> chuNhas = (from p in db.ChuNhas
+                           select p).ToList();
+            ViewBag.chuNhas = chuNhas;
+            return View(nhas);
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
