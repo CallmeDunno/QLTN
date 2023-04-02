@@ -2,13 +2,15 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-@model List<ThongTinNha>
 @{
     List<ChuNha> chus = ViewBag.chuNhas;
+    List<ThongTinNha> nhas = ViewBag.nhas;
     var rnd = new Random();
-    var ranNha = Model.OrderBy(item => rnd.Next());
+    var ranNha = nhas.OrderBy(item => rnd.Next());
     var ranChu = chus.OrderBy(item => rnd.Next());
+
 }
+
 <!-- ======= Intro Section ======= -->
 <div class="intro intro-carousel swiper position-relative">
     <div class="swiper-wrapper">

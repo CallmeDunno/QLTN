@@ -19,6 +19,7 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="Type">Loại Nhà</label>
                             <select class="form-control form-select form-control-a" id="Type">
+                                <option>--Chọn loại nhà--</option>
                                 @foreach (var item in Model.LoaiNhaList)
                                 {
                                     <option value="@item.MaLoai">@item.TenLoai</option>
@@ -30,10 +31,11 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="address">Địa Chỉ</label>
                             <select class="form-control form-select form-control-a" id="address">
+                                <option>--Chọn địa chỉ nhà--</option>
                                 @foreach (var item in Model.DiaChiNhaList)
                                 {
                                     <option value="@item">@item</option>
-                                }                                
+                                }                              
                             </select>
                         </div>
                     </div>
@@ -42,6 +44,7 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="object">Đối Tượng Sử Dụng</label>
                             <select class="form-control form-select form-control-a" id="object">
+                                <option>--Chọn đối tượng sử dụng--</option>
                                 @foreach(var item in Model.DoiTuongSuDungList)
                                 {
                                     <option value="@item.MaDtsd">@item.TenDtsd</option>
@@ -53,10 +56,7 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="area">Diện Tích</label>
                             <select class="form-control form-select form-control-a" id="area">
-                                @*@foreach (var item in Model.DienTichList)
-                                {
-                                    <option value="@item">@item</option>
-                                }*@
+                            <option>--Chọn diện tích nhà--</option>
                                 <option>Dưới 50m2</option>
                                 <option>50m2 - 100m2</option>
                                 <option>100m2 - 150m2</option>
@@ -71,6 +71,7 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="purpose">Mục Đích Sử Dụng</label>
                             <select class="form-control form-select form-control-a" id="purpose">
+                            <option>--Chọn mục đích sử dụng--</option>
                                 @foreach (var item in Model.MucDichSuDungList)
                                 {
                                     <option value="@item.MaMdsd">@item.TenMdsd</option>
@@ -82,10 +83,7 @@
                         <div class="form-group mt-3">
                             <label class="pb-2" for="price">Giá Cả</label>
                             <select class="form-control form-select form-control-a" id="price">
-                                @*@foreach (var item in Model.GiaPhongList)
-                                {
-                                    <option value="@item">@item</option>
-                                }*@
+                                <option>--Chọn giá nhà--</option>
                                 <option>Dưới 2 triệu</option>
                                 <option>2 - 5 triệu</option>
                                 <option>5 - 7 triệu</option>
