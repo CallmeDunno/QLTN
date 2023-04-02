@@ -8,7 +8,6 @@ namespace BTL.Controllers
 {
     public class HomeController : Controller
     {
-        QltnContext db = new QltnContext();
         private readonly ILogger<HomeController> _logger;
 
         QltnContext db = new QltnContext();
@@ -20,11 +19,25 @@ namespace BTL.Controllers
 
         public IActionResult Index()
         {
+
+            var loainha = db.LoaiNhas.ToList();
+            var dtsd = db.DoiTuongSuDungs.ToList();
+            var mdsd = db.MucDichSuDungs.ToList();
+            ViewModelSearch viewModelSearch = new ViewModelSearch
+            {
+                LoaiNhaList = loainha,
+                DoiTuongSuDungList = dtsd,
+                MucDichSuDungList = mdsd
+            };
+            viewModelSearch.DiaChiNhaList = db.ThongTinNhas.Select(x => x.DiaChiNha).Distinct().ToList();
+            
+
             List<ThongTinNha> nhas = db.ThongTinNhas.ToList();
             List<ChuNha> chuNhas = (from p in db.ChuNhas
                                     select p).ToList();
             ViewBag.chuNhas = chuNhas;
-            return View(nhas);
+            ViewBag.nhas = nhas;
+            return View(viewModelSearch);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
