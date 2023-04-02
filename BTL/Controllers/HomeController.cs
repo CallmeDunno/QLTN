@@ -1,11 +1,14 @@
 ﻿using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BTL.Controllers
 {
     public class HomeController : Controller
     {
+        QltnContext db = new QltnContext();
         private readonly ILogger<HomeController> _logger;
 
         QltnContext db = new QltnContext();
