@@ -4,49 +4,118 @@
     Layout = "~/Views/Shared/_LayoutHouse.cshtml";
 }
 
-
 @using BTL.Models;
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<ThongTinNha>
-@foreach (var item in Model)
-{
-    <div class="col-md-4">
-        <div class="card-box-a card-shadow">
-            <div class="img-box-a">
-                <img src="@Url.Content("../Images/"+@item.AnhMinhHoa) " alt=" " class="img-a img-fluid">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="grid-option">
+                <form>
+                    <select class="custom-select">
+                        <option selected>--Sắp xếp--</option>
+                        <option value="1">Từ cũ đến mới</option>
+                        <option value="2">Giá từ thấp tới cao</option>
+                        <option value="3">Giá từ cao tới thấp</option>
+                    </select>
+                </form>
             </div>
-            <div class="card-overlay">
-                <div class="card-overlay-a-content">
-                    <div class="card-header-a">
-                        <h2 class="card-title-a">
-                            <a href="#">
-                                @item.DienTich
-                                <br> @item.DiaChiNha
-                            </a>
-                        </h2>
-                    </div>
-                    <div class="card-body-a">
-                        <div class="price-box d-flex">
-                            <span class="price-a">rent | @item.GiaPhong</span>
+        </div>
+        @foreach(var item in Model)
+        {
+            <div class="col-md-4">
+            <div class="card-box-a card-shadow">
+                <div class="img-box-a">
+                    <img src="../Images/@item.AnhMinhHoa" alt="" class="img-a img-fluid">
+                </div>
+                <div class="card-overlay">
+                    <div class="card-overlay-a-content">
+                        <div class="card-header-a">
+                            <h2 class="card-title-a">
+                                <a href="#">
+                                        <span class="color-b"> @item.DiaChiNha</span>
+                                </a>
+                            </h2>
                         </div>
-                        <a href="property-single.html" class="link-a">
-                            Click here to view
-                            <span class="bi bi-chevron-right"></span>
-                        </a>
-                    </div>
-                    <div class="card-footer-a">
-                        <ul class="card-info d-flex justify-content-around">
-                          
-                        </ul>
+                        <div class="card-body-a">
+                            <div class="price-box d-flex">
+                                    <span class="price-a">Giá phòng | @item.GiaPhong.ToString("#,##0") VND</span>
+                            </div>
+                            <a href="property-single.html" class="link-a">
+                                    Nhấn để xem chi tiết
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                            <div class="card-footer-a">
+                                <ul class="card-info d-flex justify-content-around">
+                                    <li>
+                                        <h4 class="card-info-title">Diện tích</h4>
+                                        <span>
+                                            @item.DienTich
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <h4 class="card-info-title">Tiền điện</h4>
+                                        <span>@item.TienDien.ToString("#,##0") VND</span>
+                                    </li>
+                                    <li>
+                                        <h4 class="card-info-title">Tiền nước</h4>
+                                        <span>@item.TienNuoc.ToString("#,##0") VND</span>
+                                    </li>
+                                    <li>
+                                        <h4 class="card-info-title">Tiền đặt cọc</h4>
+                                        <span>@item.TienDatCoc.ToString("#,##0") VND</span>
+                                    </li>
+                                </ul>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
+        }
+        
     </div>
-   }
-<nav class="pagination-a">
-        @Html.PagedListPager(Model, page=>Url.Action("Index", new{page=page}))
-</nav>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="pagination-a">
+                <ul class="pagination justify-content-end">
+                    @Html.PagedListPager(Model,page=>Url.Action("Index", new{page=page}))
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    .pagination li.active {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #2eca6a;
+        border-color: #2eca6a;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination li {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
+
 
         
 
