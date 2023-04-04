@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BTL.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BTL.Controllers
-{
-    //Dương
-    
+{  
     public class HostController : Controller
     {
+        QltnContext db = new QltnContext();
+
         public IActionResult Index()
         {
-            return View();
+            var chunhas = db.ChuNhas.ToList();
+            //ViewBag.ChuNhas = chunhas;
+            return View(chunhas);
         }
     }
 }
