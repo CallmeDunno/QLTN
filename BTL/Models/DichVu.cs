@@ -9,5 +9,5 @@ public partial class DichVu
 
     public string TenDichVu { get; set; } = null!;
 
-    public virtual ICollection<ThongTinNha> MaNhas { get; } = new List<ThongTinNha>();
+    public virtual ICollection<NhaDichVu> NhaDichVus { get; } = new List<NhaDichVu>();
 }
