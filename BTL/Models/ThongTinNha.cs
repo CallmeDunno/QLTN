@@ -47,7 +47,7 @@ public partial class ThongTinNha
 
     public virtual MucDichSuDung MaMdsdNavigation { get; set; } = null!;
 
-    public virtual ICollection<NhaTaiSan> NhaTaiSans { get; } = new List<NhaTaiSan>();
+    public virtual ICollection<NhaDichVu> NhaDichVus { get; } = new List<NhaDichVu>();
 
-    public virtual ICollection<DichVu> MaDichVus { get; } = new List<DichVu>();
+    public virtual ICollection<NhaTaiSan> NhaTaiSans { get; } = new List<NhaTaiSan>();
 }

@@ -15,36 +15,8 @@
 
     <main id="main">
       
-        <!-- ======= Intro Single ======= -->
-        <section class="intro-single">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="title-single-box">
-                            <h1 class="title-single">Thông tin nhà</h1>
-                            <span class="color-text-a">Danh sách nhà</span>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-4">
-                        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a asp-controller="Home">Trang chủ</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Thông tin nhà
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section><!-- End Intro Single-->
-        <!-- ======= Property Grid ======= -->
-        <section class="property-grid grid">
-            @RenderBody()
-        </section><!-- End Property Grid Single-->
-
+       
+        @RenderBody()
     </main><!-- End #main -->
     <!-- ======= Footer ======= -->
     @await Html.PartialAsync("_PartialFooter");
