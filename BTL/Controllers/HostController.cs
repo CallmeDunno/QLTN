@@ -23,5 +23,10 @@ namespace BTL.Controllers
             PagedList<ChuNha> lst = new PagedList<ChuNha>(lstchu, pageNumber, pageSize);
             return View(lst);
         }
+
+        public IActionResult HostDetail(int MaChuNha)
+        {
+            return View();
+        }
     }
 }
