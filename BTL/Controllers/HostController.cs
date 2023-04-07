@@ -1,4 +1,5 @@
-﻿using BTL.Models;
+﻿using Azure;
+using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
@@ -26,7 +27,21 @@ namespace BTL.Controllers
 
         public IActionResult HostDetail(int MaChuNha)
         {
-            return View();
+            var chunha = db.ChuNhas.Where(x => x.MaChuNha == MaChuNha).FirstOrDefault();
+            var nha = db.ThongTinNhas.Where(x => x.MaChuNha == MaChuNha).ToList();
+            HostDetail hostDetail = new HostDetail 
+            {
+                ThongTinNha = nha,
+                ChuNha = chunha
+            };
+            if (hostDetail == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(hostDetail);
+            }
         }
     }
 }
