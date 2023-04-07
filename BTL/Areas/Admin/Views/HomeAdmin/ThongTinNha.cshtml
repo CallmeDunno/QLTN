@@ -1,5 +1,6 @@
-﻿@model IEnumerable<BTL.Models.ThongTinNha>
-
+﻿@using BTL.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<ThongTinNha>
 @{
     ViewData["Title"] = "ThongTinNha";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -15,46 +16,49 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.DiaChiNha)
+                    @Html.DisplayNameFor(model => model[0].MaNha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DienTich)
+                    @Html.DisplayNameFor(model => model[0].DiaChiNha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.GiaPhong)
+                    @Html.DisplayNameFor(model => model[0].DienTich)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TienDien)
+                    @Html.DisplayNameFor(model => model[0].GiaPhong)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TienNuoc)
+                    @Html.DisplayNameFor(model => model[0].TienDien)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TienDatCoc)
+                    @Html.DisplayNameFor(model => model[0].TienNuoc)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TinhTrangThue)
+                    @Html.DisplayNameFor(model => model[0].TienDatCoc)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AnhMinhHoa)
+                    @Html.DisplayNameFor(model => model[0].TinhTrangThue)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NgayDangTai)
+                    @Html.DisplayNameFor(model => model[0].AnhMinhHoa)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MoTaNha)
+                    @Html.DisplayNameFor(model => model[0].NgayDangTai)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaChuNhaNavigation)
+                    @Html.DisplayNameFor(model => model[0].MoTaNha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaDtsdNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaChuNhaNavigation)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaLoaiNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaDtsdNavigation)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MaMdsdNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaLoaiNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].MaMdsdNavigation)
                 </th>
                 <th></th>
             </tr>
@@ -63,6 +67,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaNha)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DiaChiNha)
                     </td>
@@ -106,12 +113,42 @@
                         @Html.DisplayFor(modelItem => item.MaMdsdNavigation.MaMdsd)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.MaNha">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.MaNha">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.MaNha">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.MaNha">Sửa</a> |
+                        <a asp-action="Delete" asp-route-id="@item.MaNha">Xóa</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    <div class="product__pagination">
+        @Html.PagedListPager(Model, page=>Url.Action("ThongTinNha", new{page=page}))
+    </div>
 </div>
+
+<style>
+    .pagination li.active {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #b66dff;
+        border-color: #b66dff;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination li {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
