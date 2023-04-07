@@ -1,0 +1,68 @@
+﻿@using BTL.Models
+@using X.PagedList.Mvc.Core
+@model BTL.Models.ChuNha
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ThemChuNhaMoi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemChuNhaMoi</h1>
+
+<h4>ChuNha</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemChuNhaMoi">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenChuNha" class="control-label">Ten Chu Nha</label>
+                <input asp-for="TenChuNha" class="form-control" />
+                <span asp-validation-for="TenChuNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Địa Chỉ</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinh" class="control-label">Ngày Sinh</label>
+                <input asp-for="NgaySinh" class="form-control" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SdtchuNha" class="control-label">SĐT Chu Nha</label>
+                <input asp-for="SdtchuNha" class="form-control" />
+                <span asp-validation-for="SdtchuNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SdtchuNha2" class="control-label">SDT Chu Nha 2</label>
+                <input asp-for="SdtchuNha2" class="form-control" />
+                <span asp-validation-for="SdtchuNha2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnhChuNha" class="control-label">Ảnh Chủ Nhà</label>
+                <input asp-for="AnhChuNha" class="form-control" />
+                <span asp-validation-for="AnhChuNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaChuNha" class="control-label">Mô Tả Chủ Nhà</label>
+                <input asp-for="MoTaChuNha" class="form-control" />
+                <span asp-validation-for="MoTaChuNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
