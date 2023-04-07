@@ -1,0 +1,31 @@
+﻿@model BTL.Models.DichVu
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "UpdateDichVu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>UpdateDichVu</h1>
+
+<h4>DichVu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateDichVu">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaDichVu" />
+            <div class="form-group">
+                <label asp-for="TenDichVu" class="control-label"></label>
+                <input asp-for="TenDichVu" class="form-control" />
+                <span asp-validation-for="TenDichVu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListDichVu">Back to List</a>
+</div>
