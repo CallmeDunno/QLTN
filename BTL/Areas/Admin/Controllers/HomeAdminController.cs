@@ -122,8 +122,8 @@ namespace BTL.Areas.Admin.Controllers
         {
             int pageSize = 12;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var list = db.NhaDichVus.AsNoTracking().OrderBy(x => x.MaNha);
-            PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(list, pageNumber, pageSize);
+            var listNha = db.NhaDichVus.AsNoTracking().ToList();
+            PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(listNha, pageNumber, pageSize);
             return View(lst);
         }
 
