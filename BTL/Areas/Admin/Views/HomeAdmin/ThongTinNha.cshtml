@@ -1,15 +1,16 @@
 ﻿@using BTL.Models;
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<ThongTinNha>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "ThongTinNha";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>ThongTinNha</h1>
-
+<p>@TempData["Message"]</p>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="ThemNha">Thêm mới</a>
 </p>
 <div class="table-responsive">
     <table class="table">
@@ -49,16 +50,16 @@
                     @Html.DisplayNameFor(model => model[0].MoTaNha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].MaChuNhaNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaChuNha)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].MaDtsdNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaDtsd)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].MaLoaiNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaLoai)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].MaMdsdNavigation)
+                    @Html.DisplayNameFor(model => model[0].MaMdsd)
                 </th>
                 <th></th>
             </tr>
@@ -101,26 +102,26 @@
                         @Html.DisplayFor(modelItem => item.MoTaNha)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MaChuNhaNavigation.MaChuNha)
+                        @Html.DisplayFor(modelItem => item.MaChuNha)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MaDtsdNavigation.MaDtsd)
+                        @Html.DisplayFor(modelItem => item.MaDtsd)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MaLoaiNavigation.MaLoai)
+                        @Html.DisplayFor(modelItem => item.MaLoai)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MaMdsdNavigation.MaMdsd)
+                        @Html.DisplayFor(modelItem => item.MaMdsd)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.MaNha">Sửa</a> |
-                        <a asp-action="Delete" asp-route-id="@item.MaNha">Xóa</a>
+                        <a asp-action="SuaNha" asp-route-id="@item.MaNha">Sửa</a> |
+                        <a asp-action="XoaNha" asp-route-id="@item.MaNha">Xóa</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="product__pagination">
+    <div class="product__pagination" style="margin-top:30px">
         @Html.PagedListPager(Model, page=>Url.Action("ThongTinNha", new{page=page}))
     </div>
 </div>
