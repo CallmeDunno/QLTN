@@ -7,7 +7,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>ThongTinNha</h1>
+<h1>Thông tin nhà</h1>
 <p>@TempData["Message"]</p>
 <p>
     <a class="btn btn-primary" asp-action="ThemNha">Thêm mới</a>
@@ -61,7 +61,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model[0].MaMdsd)
                 </th>
-                <th></th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
