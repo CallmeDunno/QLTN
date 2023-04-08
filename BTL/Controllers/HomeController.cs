@@ -17,7 +17,7 @@ namespace BTL.Controllers
         {
             _logger = logger;
         }
-        /*[Authentication]*/
+        [Authentication]
         public IActionResult Index()
         {
 
@@ -36,6 +36,7 @@ namespace BTL.Controllers
             List<ThongTinNha> nhas = db.ThongTinNhas.ToList();
             List<ChuNha> chuNhas = (from p in db.ChuNhas
                                     select p).ToList();
+
             ViewBag.chuNhas = chuNhas;
             ViewBag.nhas = nhas;
             return View(viewModelSearch);

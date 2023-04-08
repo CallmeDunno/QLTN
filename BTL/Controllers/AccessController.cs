@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BTL.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BTL.Controllers
 {
@@ -9,7 +11,7 @@ namespace BTL.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if(HttpContext.Session.GetString("UserName") == null)
+            if (HttpContext.Session.GetString("UserName") == null)
             {
                 return View();
             }
@@ -24,7 +26,7 @@ namespace BTL.Controllers
             if (HttpContext.Session.GetString("UserName") == null)
             {
                 var u = db.NguoiDungs.Where(x => x.TenNguoiDung.Equals(user.TenNguoiDung) && x.MatKhau.Equals(user.MatKhau)).FirstOrDefault();
-                if(u!= null)
+                if (u != null)
                 {
                     HttpContext.Session.SetString("UserName", u.TenNguoiDung.ToString());
                     return RedirectToAction("Index", "Home");
@@ -41,27 +43,48 @@ namespace BTL.Controllers
         }
 
         /*[HttpPost]
-        public IActionResult Logout()
+        public ActionResult Register(NguoiDung user)
         {
-            // Xóa cookie
-            foreach (var cookie in Request.Cookies.Keys)
+            if (ModelState.IsValid)
             {
-                Response.Cookies.Delete(cookie);
+                try
+                {
+                    // Kiểm tra xem tài khoản đã tồn tại chưa
+                    var u = db.NguoiDungs.FirstOrDefault(u => u.TenNguoiDung == user.TenNguoiDung);
+                    if (u != null)
+                    {
+                        ModelState.AddModelError("TenNguoiDung", "Tài khoản đã tồn tại");
+                        return View();
+                    }
+
+                    // Tạo mới đối tượng NguoiDung và lưu vào CSDL
+                    var newUser = new NguoiDung
+                    {
+                        TenNguoiDung = user.TenNguoiDung,
+                        MatKhau = user.MatKhau,
+                        Sdt = user.Sdt,
+                        Email = user.Email,
+                        DiaChi = user.DiaChi,
+                        NgaySinh = user.NgaySinh,
+                        NgheNghiep = user.NgheNghiep,
+                        AnhNguoiDung = user.AnhNguoiDung
+                    };
+
+                    db.NguoiDungs.Add(newUser);
+                    db.SaveChanges();
+
+                    // Đăng ký thành công, chuyển hướng đến trang đăng nhập
+                    return RedirectToAction("Login", "Access");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Đã có lỗi xảy ra: " + ex.Message);
+                    return View();
+                }
             }
 
-            // Xóa session
-            HttpContext.Session.Clear();
-
-            //Xóa session có tên UserName
-            HttpContext.Session.Remove("UserName");
-
-            // Xóa cache
-            Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-            Response.Headers.Add("Pragma", "no-cache");
-            Response.Headers.Add("Expires", "0");
-
-            return RedirectToAction("Index", "Home");
+            // Dữ liệu không hợp lệ, trả về View với thông tin lỗi
+            return View();
         }*/
-
     }
 }
