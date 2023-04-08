@@ -1,4 +1,5 @@
 ﻿using BTL.Models;
+using BTL.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace BTL.Controllers
         {
             _logger = logger;
         }
-
+        [Authentication]
         public IActionResult Index()
         {
             var loainha = db.LoaiNhas.ToList();
@@ -34,6 +35,7 @@ namespace BTL.Controllers
             List<ThongTinNha> nhas = db.ThongTinNhas.ToList();
             List<ChuNha> chuNhas = (from p in db.ChuNhas
                                     select p).ToList();
+
             ViewBag.chuNhas = chuNhas;
             ViewBag.nhas = nhas;
             return View(viewModelSearch);
