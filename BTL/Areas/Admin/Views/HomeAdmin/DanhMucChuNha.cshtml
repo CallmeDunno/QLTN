@@ -1,7 +1,7 @@
 ﻿@using BTL.Models;
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<ChuNha>;
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "DanhMucChuNha";
@@ -42,7 +42,7 @@
                 <th>
                     Mô Tả Chủ Nhà
                 </th>
-                <th></th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>

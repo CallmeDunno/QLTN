@@ -1,0 +1,33 @@
+﻿@model BTL.Models.TaiSan
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "SuaTaiSan";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa tài sản</h1>
+
+<h4>Tài sản</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="SuaTaiSan">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaTaiSan" />
+            <div class="form-group">
+                <label asp-for="TenTaiSan" class="control-label"></label>
+                <input asp-for="TenTaiSan" class="form-control" />
+                <span asp-validation-for="TenTaiSan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

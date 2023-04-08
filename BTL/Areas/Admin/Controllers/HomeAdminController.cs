@@ -466,18 +466,146 @@ namespace BTL.Areas.Admin.Controllers
         #region Hải
         #region MDSD
         [Route("ThongTinMDSD")]
-        public IActionResult ThongTinMDSD()
+        public IActionResult ThongTinMDSD(int ? page)
+        {
+            int pageSize = 12;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstmdsd = db.MucDichSuDungs.AsNoTracking().OrderBy(x => x.MaMdsd);
+            PagedList<MucDichSuDung> lst = new PagedList<MucDichSuDung>(lstmdsd, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        [Route("ThemMDSD")]
+        [HttpGet]
+        public IActionResult ThemMDSD()
         {
             return View();
+        }
+
+        [Route("ThemMDSD")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemMDSD(MucDichSuDung mucDichSuDung)
+        {
+            if (ModelState.IsValid)
+            {
+                db.MucDichSuDungs.Add(mucDichSuDung);
+                db.SaveChanges();
+                return RedirectToAction("ThongTinMDSD");
+            }
+            return View();
+        }
+
+        [Route("SuaMDSD")]
+        [HttpGet]
+        public IActionResult SuaMDSD(int id)
+        {
+            var mucDichSuDung = db.MucDichSuDungs.Find(id);
+            return View(mucDichSuDung);
+        }
+
+        [Route("SuaMDSD")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaMDSD(MucDichSuDung mucDichSuDung)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(mucDichSuDung).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ThongTinMDSD");
+            }
+            return View();
+        }
+
+        [Route("XoaMDSD")]
+        [HttpGet]
+        public IActionResult XoaMDSD(int id)
+        {
+            TempData["Message"] = "";
+            var thongTinNha = db.ThongTinNhas.Where(x => x.MaMdsd == id).ToList();
+            if (thongTinNha.Any())
+            {
+                TempData["Message"] = "không thể xóa mục đích sử dụng này vì đã tồn tại trong bảng thông tin nhà";
+                return RedirectToAction("ThongTinMDSD");
+            }
+            db.Remove(db.MucDichSuDungs.Find(id));
+            db.SaveChanges();
+            TempData["Message"] = "Xóa mục đích sử dụng thành công";
+            return RedirectToAction("ThongTinMDSD");
         }
         #endregion
 
         #region TaiSan
         [Route("ThongTinTaiSan")]
-        public IActionResult ThongTinTaiSan()
+        public IActionResult ThongTinTaiSan(int ? page)
+        {
+            int pageSize = 12;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstts = db.TaiSans.AsNoTracking().OrderBy(x => x.MaTaiSan);
+            PagedList<TaiSan> lst = new PagedList<TaiSan>(lstts, pageNumber, pageSize);
+            return View(lst);
+        }
+        [Route("ThemTaiSan")]
+        [HttpGet]
+        public IActionResult ThemTaiSan()
         {
             return View();
         }
+
+        [Route("ThemTaiSan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemTaiSan(TaiSan taiSan)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TaiSans.Add(taiSan);
+                db.SaveChanges();
+                return RedirectToAction("ThongTinTaiSan");
+            }
+            return View();
+        }
+
+        [Route("SuaTaiSan")]
+        [HttpGet]
+        public IActionResult SuaTaiSan(int id)
+        {
+            var taiSan = db.TaiSans.Find(id);
+            return View(taiSan);
+        }
+
+        [Route("SuaTaiSan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaTaiSan(TaiSan taiSan)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(taiSan).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ThongTinTaiSan");
+            }
+            return View();
+        }
+
+        [Route("XoaTaiSan")]
+        [HttpGet]
+        public IActionResult XoaTaiSan(int id)
+        {
+            TempData["Message"] = "";
+            var thongTinNha = db.TaiSans.Where(x => x.MaTaiSan == id).ToList();
+            if (thongTinNha.Any())
+            {
+                TempData["Message"] = "không thể xóa tài sản này vì đã tồn tại trong bảng thông tin nhà";
+                return RedirectToAction("ThongTinTaiSan");
+            }
+            db.Remove(db.TaiSans.Find(id));
+            db.SaveChanges();
+            TempData["Message"] = "Xóa tài sản thành công";
+            return RedirectToAction("ThongTinTaiSan");
+        }
+
         #endregion
         #endregion
     }
