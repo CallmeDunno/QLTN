@@ -20,7 +20,6 @@ namespace BTL.Controllers
         [Authentication]
         public IActionResult Index()
         {
-
             var loainha = db.LoaiNhas.ToList();
             var dtsd = db.DoiTuongSuDungs.ToList();
             var mdsd = db.MucDichSuDungs.ToList();

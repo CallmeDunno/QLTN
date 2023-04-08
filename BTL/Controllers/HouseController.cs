@@ -18,7 +18,7 @@ namespace BTL.Controllers
 
         public IActionResult Index(int? page)
         {
-            int pageSize = 6;
+            int pageSize = 9;
             int pageNumber=  page == null || page < 0 ? 1 : page.Value;
             var lstphong = db.ThongTinNhas.AsNoTracking().OrderBy(x => x.MaNha);
             PagedList<ThongTinNha> lst = new PagedList<ThongTinNha>(lstphong, pageNumber, pageSize);
