@@ -115,15 +115,15 @@ namespace BTL.Areas.Admin.Controllers
         }
         #endregion
 
-        #region HopDongNha
+        #region NhaDichVu
 
         [Route("NhaDichVu")]
         public IActionResult NhaDichVu(int? page)
         {
             int pageSize = 12;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listNha = db.NhaDichVus.AsNoTracking().OrderBy(x => x.MaNha);
-            PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(listNha, pageNumber, pageSize);
+            var list = db.NhaDichVus.AsNoTracking().OrderBy(x => x.MaNha);
+            PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(list, pageNumber, pageSize);
             return View(lst);
         }
 
