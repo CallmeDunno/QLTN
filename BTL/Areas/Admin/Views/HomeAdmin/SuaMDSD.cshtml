@@ -1,0 +1,33 @@
+﻿@model BTL.Models.MucDichSuDung
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "SuaMDSD";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa mục đích sử dụng</h1>
+
+<h4>Mục đích sử dụng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="SuaMDSD">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaMdsd" />
+            <div class="form-group">
+                <label asp-for="TenMdsd" class="control-label"></label>
+                <input asp-for="TenMdsd" class="form-control" />
+                <span asp-validation-for="TenMdsd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

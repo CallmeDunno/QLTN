@@ -1,23 +1,24 @@
 ﻿@using BTL.Models;
 @using X.PagedList.Mvc.Core;
-@model X.PagedList.IPagedList<DoiTuongSuDung>
+@model X.PagedList.IPagedList<MucDichSuDung>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
-    ViewData["Title"] = "ListDoiTuongSuDung";
+    ViewData["Title"] = "ThongTinMDSD";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Danh sách đối tượng sử dụng</h1>
+<h1>Danh sách mục đích sử dụng</h1>
 <p>@TempData["Message"]</p>
 <p>
-    <a class="btn btn-primary" asp-action="ThemDoiTuongSuDung">Thêm mới</a>
+    <a class="btn btn-primary" asp-action="ThemMDSD">Thêm mới</a>
 </p>
 <div class="table-responsive">
     <table class="table">
         <thead>
             <tr class="table-danger">
                 <th>
-                    @Html.DisplayNameFor(model => model[0].TenDtsd)
+                    @Html.DisplayNameFor(model => model[0].TenMdsd)
                 </th>
                 <th>Hành động</th>
             </tr>
@@ -36,18 +37,18 @@
                 }
                 <tr class="@cls">
                     <td>
-                        @Html.DisplayFor(modelItem => item.TenDtsd)
+                        @Html.DisplayFor(modelItem => item.TenMdsd)
                     </td>
                     <td>
-                        <a asp-action="SuaDoiTuongSuDung" asp-route-id="@item.MaDtsd">Sửa</a> |
-                        <a asp-action="XoaDoiTuongSuDung" asp-route-id="@item.MaDtsd">Xóa</a>
+                        <a asp-action="SuaMDSD" asp-route-id="@item.MaMdsd">Sửa</a> |
+                        <a asp-action="XoaMDSD" asp-route-id="@item.MaMdsd">Xóa</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     <div class="product__pagination">
-        @Html.PagedListPager(Model, page=>Url.Action("ThongTinDTSD", new{page=page}))
+        @Html.PagedListPager(Model, page=>Url.Action("ThongTinNha", new{page=page}))
     </div>
 </div>
 <style>

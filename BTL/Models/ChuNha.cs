@@ -19,7 +19,7 @@ public partial class ChuNha
     public string DiaChi { get; set; } = null!;
 
     [DisplayName("Ngày sinh: ")]
-    [RegularExpression(@"^([0-9]{2})/([0-9]{2})/([0-9]{4})$", ErrorMessage = "Ngày sinh không đúng định dạng dd/MM/yyyy.")]
+    [RegularExpression(@"^((0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{2})\s([1-9]|1[0-2]):([0-5][0-9])\s(AM|PM)$", ErrorMessage = "Ngày sinh không đúng định dạng MM/dd/yyyy HH:mm AM|PM.")]
     public DateTime NgaySinh { get; set; }
 
     [DisplayName("Số điện thoại: ")]
