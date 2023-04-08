@@ -35,8 +35,6 @@ public partial class ThongTinNha
 
     public int MaMdsd { get; set; }
 
-    public virtual ICollection<DanhGiaNha> DanhGiaNhas { get; } = new List<DanhGiaNha>();
-
     public virtual ICollection<HopDongNha> HopDongNhas { get; } = new List<HopDongNha>();
 
     public virtual ChuNha MaChuNhaNavigation { get; set; } = null!;
