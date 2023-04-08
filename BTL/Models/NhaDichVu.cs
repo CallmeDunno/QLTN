@@ -9,6 +9,9 @@ public partial class NhaDichVu
 
     public int MaDichVu { get; set; }
 
+    [DisplayName("Ghi chú: ")]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Ghi chú bao gồm chữ thường, in hoa và số.")]
+
     public string? GhiChu { get; set; }
 
     public virtual DichVu MaDichVuNavigation { get; set; } = null!;
