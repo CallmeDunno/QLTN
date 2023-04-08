@@ -24,6 +24,7 @@ namespace BTL.Areas.Admin.Controllers
             return View();
         }
 
+        #region ThongTinNha
 
         [Route("ThongTinNha")]
         public IActionResult ThongTinNha(int? page)
@@ -35,17 +36,163 @@ namespace BTL.Areas.Admin.Controllers
             return View(lst);
         }
 
-        #region Văn Vũ 11h tối
-
-        #region ChuNha
-        [Route("ThongTinChuNha")]
-        public IActionResult ThongTinChuNha()
+        [Route("ThemNha")]
+        [HttpGet]
+        public IActionResult ThemNha()
         {
+            ViewBag.MaDtsd = new SelectList(db.DoiTuongSuDungs.ToList(), "MaDtsd", "MaDtsd");
+            ViewBag.MaLoai = new SelectList(db.LoaiNhas.ToList(), "MaLoai", "MaLoai");
+            ViewBag.MaChuNha = new SelectList(db.ChuNhas.ToList(), "MaChuNha", "MaChuNha");
+            ViewBag.MaMdsd = new SelectList(db.MucDichSuDungs.ToList(), "MaMdsd", "MaMdsd");
             return View();
         }
 
+        [Route("ThemNha")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemNha(ThongTinNha thongTinNha)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.ThongTinNhas.Add(thongTinNha);
+                db.SaveChanges();
+                return RedirectToAction("ThongTinNha");
+            } else
+            {
+                return View();
+            }
+        }
+
+        [Route("SuaNha")]
+        [HttpGet]
+        public IActionResult SuaNha(int id)
+        {
+            ViewBag.MaDtsd = new SelectList(db.DoiTuongSuDungs.ToList(), "MaDtsd", "MaDtsd");
+            ViewBag.MaLoai = new SelectList(db.LoaiNhas.ToList(), "MaLoai", "MaLoai");
+            ViewBag.MaChuNha = new SelectList(db.ChuNhas.ToList(), "MaChuNha", "MaChuNha");
+            ViewBag.MaMdsd = new SelectList(db.MucDichSuDungs.ToList(), "MaMdsd", "MaMdsd");
+            var nha = db.ThongTinNhas.Find(id);
+            return View(nha);
+        }
+
+        [Route("SuaNha")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaNha(ThongTinNha thongTinNha)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.Entry(thongTinNha).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ThongTinNha");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [Route("XoaNha")]
+        [HttpGet]
+        public IActionResult XoaNha(int id)
+        {
+            TempData["Message"] = "";
+            var hdn = db.HopDongNhas.Where(x => x.MaNha == id).ToList();
+            var dgn = db.DanhGiaNhas.Where(x => x.MaNha == id).ToList();
+            var ndv = db.NhaDichVus.Where(x => x.MaNha == id).ToList();
+            var nts = db.NhaTaiSans.Where(x => x.MaNha == id).ToList();
+            if (hdn.Count() > 0 && dgn.Count() > 0 && ndv.Count() > 0 && nts.Count() > 0)
+            {
+                TempData["Message"] = "Không xóa được nhà này.";
+                return RedirectToAction("ThongTinNha");
+            } else
+            {
+                TempData["Message"] = "Nhà đã được xóa.";
+                db.Remove(db.ThongTinNhas.Find(id));
+                db.SaveChanges();
+                return RedirectToAction("ThongTinNha");
+            }
+        }
         #endregion
 
+        #region HopDongNha
+
+        [Route("NhaDichVu")]
+        public IActionResult NhaDichVu(int? page)
+        {
+            int pageSize = 12;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var listNha = db.NhaDichVus.AsNoTracking().OrderBy(x => x.MaNha);
+            PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(listNha, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        [Route("ThemNhaDichVu")]
+        [HttpGet]
+        public IActionResult ThemNhaDichVu()
+        {
+            ViewBag.MaNha = new SelectList(db.ThongTinNhas.ToList(), "MaNha", "MaNha");
+            ViewBag.MaDichVu = new SelectList(db.DichVus.ToList(), "MaDichVu", "TenDichVu");
+            
+            return View();
+        }
+
+        [Route("ThemNhaDichVu")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemNhaDichVu(NhaDichVu nhaDichVu)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.NhaDichVus.Add(nhaDichVu);
+                db.SaveChanges();
+                return RedirectToAction("NhaDichVu");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        
+        [Route("SuaNhaDichVu")]
+        [HttpGet]
+        public IActionResult SuaNhaDichVu(int id1, int id2)
+        {
+            var nha = db.NhaDichVus.Where(x => x.MaNha == id1 && x.MaDichVu == id2).FirstOrDefault();
+            return View(nha);
+        }
+
+        [Route("SuaNhaDichVu")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaNhaDichVu(NhaDichVu nhaDichVu)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.Entry(nhaDichVu).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("NhaDichVu");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        
+        [Route("XoaNhaDichVu")]
+        [HttpGet]
+        public IActionResult XoaNhaDichVu(int id)
+        {
+            TempData["Message"] = "Dịch vụ đã được xóa khỏi nhà.";
+            db.Remove(db.NhaDichVus.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("NhaDichVu");
+        }
+        #endregion
+
+        #region Văn Vũ
+
+        #region ChuNha
         [Route("DanhMucChuNha")]
         public IActionResult DanhMucChuNha(int? page)
         {
@@ -55,36 +202,27 @@ namespace BTL.Areas.Admin.Controllers
             PagedList<ChuNha> lst = new PagedList<ChuNha>(lstchu, pageNumber, pageSize);
             return View(lst);
         }
-        #region NguoiDung
-        [Route("ThongTinNguoiDung")]
-        public IActionResult ThongTinNguoiDung()
-        {
-            return View();
-        }
-        #endregion
-   
 
         [Route("ThemChuNhaMoi")]
         [HttpGet]
-        public IActionResult ThemChuNhaMoi() 
+        public IActionResult ThemChuNhaMoi()
         {
-
-            return View(); 
+            return View();
         }
+
         [Route("ThemChuNhaMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ThemChuNhaMoi(ChuNha chunha)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 db.ChuNhas.Add(chunha);
                 db.SaveChanges();
-                return RedirectToAction("DanhMucChuNha");   
-            }    
+                return RedirectToAction("DanhMucChuNha");
+            }
             return View(chunha);
         }
-
 
         [Route("SuaChuNha")]
         [HttpGet]
@@ -94,6 +232,7 @@ namespace BTL.Areas.Admin.Controllers
             var chuNha = db.ChuNhas.Find(maChuNha);
             return View(chuNha);
         }
+
         [Route("SuaChuNha")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,19 +246,23 @@ namespace BTL.Areas.Admin.Controllers
             }
             return View(chuNha);
         }
+
         [Route("XoaChuNha")]
         [HttpGet]
         public IActionResult XoaChuNha(int maChuNha)
         {
-          
-            var tenchunha = db.ChuNhas.Where(x => x.MaChuNha==maChuNha).ToList();
+
+            var tenchunha = db.ChuNhas.Where(x => x.MaChuNha == maChuNha).ToList();
             if (tenchunha.Any()) db.RemoveRange(tenchunha);
             db.Remove(db.ChuNhas.Find(maChuNha));
             db.SaveChanges();
             TempData["Message"] = "Chủ Nhà đã được xóa";
             return RedirectToAction("DanhMucChuNha", "HomeAdmin");
         }
+        #endregion
 
+        #region NguoiDung
+  
         [Route("DanhMucNguoiDung")]
         public IActionResult DanhMucNguoiDung(int? page)
         {
@@ -129,11 +272,11 @@ namespace BTL.Areas.Admin.Controllers
             PagedList<NguoiDung> lst = new PagedList<NguoiDung>(lstuser, pageNumber, pageSize);
             return View(lst);
         }
+
         [Route("ThemNguoiDungMoi")]
         [HttpGet]
         public IActionResult ThemNguoiDungMoi()
         {
-
             return View();
         }
         [Route("ThemNguoiDungMoi")]
@@ -157,6 +300,7 @@ namespace BTL.Areas.Admin.Controllers
             var nguoiDung = db.NguoiDungs.Find(maNguoiDung);
             return View(nguoiDung);
         }
+
         [Route("SuaNguoiDung")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -184,10 +328,12 @@ namespace BTL.Areas.Admin.Controllers
             return RedirectToAction("DanhMucNguoiDung", "HomeAdmin");
         }
 
+        #endregion
 
         #endregion
 
         #region Ngọc Quân
+
         #region DichVu
         [Route("ListDichVu")]
         public IActionResult ListDichVu(int? page)
@@ -332,6 +478,7 @@ namespace BTL.Areas.Admin.Controllers
 
         #region Dương
         #region HDN
+
         [Route("ThongTinHDN")]
         [Route("ListHopDongNha")]
         public IActionResult ListHopDongNha(int? page)
@@ -342,6 +489,7 @@ namespace BTL.Areas.Admin.Controllers
             PagedList<HopDongNha> lst = new PagedList<HopDongNha>(listhdn, pageNumber, pageSize);
             return View(lst);
         }
+
         [Route("AddHopDongNha")]
         [HttpGet]
         public IActionResult AddHopDongNha()
@@ -350,15 +498,17 @@ namespace BTL.Areas.Admin.Controllers
             ViewBag.MaNguoiDung = new SelectList(db.NguoiDungs.ToList(), "MaNguoiDung", "MaNguoiDung");
             return View();
         }
+
         [Route("AddHopDongNha")]
         [HttpPost]
         public IActionResult AddHopDongNha(HopDongNha hopDongNha)
         {
             db.HopDongNhas.Add(hopDongNha);
             db.SaveChanges();
-            TempData["Message"] = "ok";
+            TempData["Message"] = "Thêm mới thành công";
             return RedirectToAction("ListHopDongNha");
         }
+
         [Route("UpdateHopDongNha")]
         [HttpGet]
         public IActionResult UpdateHopDongNha(int id)
@@ -368,6 +518,7 @@ namespace BTL.Areas.Admin.Controllers
             var HopDongNha = db.HopDongNhas.Find(id);
             return View(HopDongNha);
         }
+
         [Route("UpdateHopDongNha")]
         [HttpPost]
         [ValidateAntiForgeryToken]
