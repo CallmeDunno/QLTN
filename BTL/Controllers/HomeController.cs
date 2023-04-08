@@ -1,4 +1,5 @@
 ﻿using BTL.Models;
+using BTL.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace BTL.Controllers
         {
             _logger = logger;
         }
-
+        /*[Authentication]*/
         public IActionResult Index()
         {
 
