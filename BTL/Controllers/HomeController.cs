@@ -17,7 +17,7 @@ namespace BTL.Controllers
         {
             _logger = logger;
         }
-        [Authentication]
+
         public IActionResult Index()
         {
             var loainha = db.LoaiNhas.ToList();

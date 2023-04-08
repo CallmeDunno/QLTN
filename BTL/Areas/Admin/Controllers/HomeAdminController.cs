@@ -1,8 +1,5 @@
-﻿using Azure;
-using BTL.Models;
+﻿using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
@@ -98,10 +95,9 @@ namespace BTL.Areas.Admin.Controllers
         {
             TempData["Message"] = "";
             var hdn = db.HopDongNhas.Where(x => x.MaNha == id).ToList();
-            var dgn = db.DanhGiaNhas.Where(x => x.MaNha == id).ToList();
             var ndv = db.NhaDichVus.Where(x => x.MaNha == id).ToList();
             var nts = db.NhaTaiSans.Where(x => x.MaNha == id).ToList();
-            if (hdn.Count() > 0 && dgn.Count() > 0 && ndv.Count() > 0 && nts.Count() > 0)
+            if (hdn.Count() > 0 && ndv.Count() > 0 && nts.Count() > 0)
             {
                 TempData["Message"] = "Không xóa được nhà này.";
                 return RedirectToAction("ThongTinNha");
@@ -115,14 +111,14 @@ namespace BTL.Areas.Admin.Controllers
         }
         #endregion
 
-        #region HopDongNha
+        #region NhaDichVu
 
         [Route("NhaDichVu")]
         public IActionResult NhaDichVu(int? page)
         {
             int pageSize = 12;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listNha = db.NhaDichVus.AsNoTracking().OrderBy(x => x.MaNha);
+            var listNha = db.NhaDichVus.AsNoTracking().ToList();
             PagedList<NhaDichVu> lst = new PagedList<NhaDichVu>(listNha, pageNumber, pageSize);
             return View(lst);
         }
@@ -279,6 +275,7 @@ namespace BTL.Areas.Admin.Controllers
         {
             return View();
         }
+
         [Route("ThemNguoiDungMoi")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -495,7 +492,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult AddHopDongNha()
         {
             ViewBag.MaNha = new SelectList(db.ThongTinNhas.ToList(), "MaNha", "MaNha");
-            ViewBag.MaNguoiDung = new SelectList(db.NguoiDungs.ToList(), "MaNguoiDung", "MaNguoiDung");
+            ViewBag.MaNguoiDung = new SelectList(db.NguoiDungs.ToList(), "MaNguoiDung", "TenNguoiDung");
             return View();
         }
 
@@ -514,7 +511,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult UpdateHopDongNha(int id)
         {
             ViewBag.MaNha = new SelectList(db.ThongTinNhas.ToList(), "MaNha", "MaNha");
-            ViewBag.MaNguoiDung = new SelectList(db.NguoiDungs.ToList(), "MaNguoiDung", "MaNguoiDung");
+            ViewBag.MaNguoiDung = new SelectList(db.NguoiDungs.ToList(), "MaNguoiDung", "TenNguoiDung");
             var HopDongNha = db.HopDongNhas.Find(id);
             return View(HopDongNha);
         }

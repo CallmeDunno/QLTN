@@ -17,8 +17,6 @@ public partial class QltnContext : DbContext
 
     public virtual DbSet<ChuNha> ChuNhas { get; set; }
 
-    public virtual DbSet<DanhGiaNha> DanhGiaNhas { get; set; }
-
     public virtual DbSet<DichVu> DichVus { get; set; }
 
     public virtual DbSet<DoiTuongSuDung> DoiTuongSuDungs { get; set; }
@@ -35,8 +33,6 @@ public partial class QltnContext : DbContext
 
     public virtual DbSet<NhaTaiSan> NhaTaiSans { get; set; }
 
-    public virtual DbSet<QuanTriVien> QuanTriViens { get; set; }
-
     public virtual DbSet<TaiSan> TaiSans { get; set; }
 
     public virtual DbSet<ThongTinNha> ThongTinNhas { get; set; }
@@ -49,7 +45,7 @@ public partial class QltnContext : DbContext
     {
         modelBuilder.Entity<ChuNha>(entity =>
         {
-            entity.HasKey(e => e.MaChuNha).HasName("PK__ChuNha__D13CC17F58009712");
+            entity.HasKey(e => e.MaChuNha).HasName("PK__ChuNha__D13CC17F61C3355C");
 
             entity.ToTable("ChuNha");
 
@@ -64,36 +60,16 @@ public partial class QltnContext : DbContext
                 .HasColumnName("SDTChuNha2");
         });
 
-        modelBuilder.Entity<DanhGiaNha>(entity =>
-        {
-            entity.HasKey(e => e.MaDanhGia).HasName("PK__DanhGiaN__AA9515BF6F5A393A");
-
-            entity.ToTable("DanhGiaNha");
-
-            entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-            entity.Property(e => e.NgayDanhGia).HasColumnType("date");
-
-            entity.HasOne(d => d.MaNguoiDungNavigation).WithMany(p => p.DanhGiaNhas)
-                .HasForeignKey(d => d.MaNguoiDung)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DGN_MaNguoiDung");
-
-            entity.HasOne(d => d.MaNhaNavigation).WithMany(p => p.DanhGiaNhas)
-                .HasForeignKey(d => d.MaNha)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DGN_MaNha");
-        });
-
         modelBuilder.Entity<DichVu>(entity =>
         {
-            entity.HasKey(e => e.MaDichVu).HasName("PK__DichVu__C0E6DE8F86A12435");
+            entity.HasKey(e => e.MaDichVu).HasName("PK__DichVu__C0E6DE8F553984B0");
 
             entity.ToTable("DichVu");
         });
 
         modelBuilder.Entity<DoiTuongSuDung>(entity =>
         {
-            entity.HasKey(e => e.MaDtsd).HasName("PK__DoiTuong__3754306EF8202864");
+            entity.HasKey(e => e.MaDtsd).HasName("PK__DoiTuong__3754306E1386E4B9");
 
             entity.ToTable("DoiTuongSuDung");
 
@@ -103,9 +79,13 @@ public partial class QltnContext : DbContext
 
         modelBuilder.Entity<HopDongNha>(entity =>
         {
-            entity.HasKey(e => e.MaHopDong).HasName("PK__HopDongN__36DD4342F1315F6C");
+            entity.HasKey(e => e.MaHopDong).HasName("PK__HopDongN__36DD4342E16B0DCB");
 
-            entity.ToTable("HopDongNha");
+            entity.ToTable("HopDongNha", tb =>
+                {
+                    tb.HasTrigger("UpdateNhaByNguoiDung");
+                    tb.HasTrigger("UpdateNhaByNguoiDung2");
+                });
 
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.ThoiGianBatDau).HasColumnType("date");
@@ -124,14 +104,14 @@ public partial class QltnContext : DbContext
 
         modelBuilder.Entity<LoaiNha>(entity =>
         {
-            entity.HasKey(e => e.MaLoai).HasName("PK__LoaiNha__730A5759DD40EA80");
+            entity.HasKey(e => e.MaLoai).HasName("PK__LoaiNha__730A5759DF9D6D23");
 
             entity.ToTable("LoaiNha");
         });
 
         modelBuilder.Entity<MucDichSuDung>(entity =>
         {
-            entity.HasKey(e => e.MaMdsd).HasName("PK__MucDichS__AF4D3B05B51D8137");
+            entity.HasKey(e => e.MaMdsd).HasName("PK__MucDichS__AF4D3B053B983182");
 
             entity.ToTable("MucDichSuDung");
 
@@ -141,13 +121,10 @@ public partial class QltnContext : DbContext
 
         modelBuilder.Entity<NguoiDung>(entity =>
         {
-            entity.HasKey(e => e.MaNguoiDung).HasName("PK__NguoiDun__C539D762349FF4BB");
+            entity.HasKey(e => e.MaNguoiDung).HasName("PK__NguoiDun__C539D76233772762");
 
             entity.ToTable("NguoiDung");
 
-            entity.Property(e => e.AnhNguoiDung).HasColumnType("text");
-            entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-            entity.Property(e => e.NgaySinh).HasColumnType("date");
             entity.Property(e => e.Sdt).HasColumnName("SDT");
         });
 
@@ -187,28 +164,16 @@ public partial class QltnContext : DbContext
                 .HasConstraintName("FK_NTS_MaTaiSan");
         });
 
-        modelBuilder.Entity<QuanTriVien>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__QuanTriV__3214EC27251F1659");
-
-            entity.ToTable("QuanTriVien");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-            entity.Property(e => e.NameAd).HasColumnName("NameAD");
-            entity.Property(e => e.PassAd).HasColumnName("PassAD");
-        });
-
         modelBuilder.Entity<TaiSan>(entity =>
         {
-            entity.HasKey(e => e.MaTaiSan).HasName("PK__TaiSan__8DB7C7BE69E33186");
+            entity.HasKey(e => e.MaTaiSan).HasName("PK__TaiSan__8DB7C7BE4515877A");
 
             entity.ToTable("TaiSan");
         });
 
         modelBuilder.Entity<ThongTinNha>(entity =>
         {
-            entity.HasKey(e => e.MaNha).HasName("PK__ThongTin__3A18F65F9F5E2554");
+            entity.HasKey(e => e.MaNha).HasName("PK__ThongTin__3A18F65F4DAEC1A2");
 
             entity.ToTable("ThongTinNha");
 

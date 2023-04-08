@@ -3,7 +3,7 @@
     ViewData["Title"] = "HouseDetail";
     Layout = "~/Views/Shared/_LayoutHouse.cshtml";
 }
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model HouseDetail
 
 <!-- ======= Intro Single ======= -->
@@ -211,11 +211,12 @@
                                             <textarea id="textMessage" class="form-control" placeholder="Comment *" name="message" cols="45" rows="8" required></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mt-3">
-                                        <button type="submit" class="btn btn-a">Send Message</button>
-                                    </div>
+                                   
                                 </div>
                             </form>
+                            <div class="col-md-12 mt-3">
+                                <a type="submit" class="btn btn-primary" asp-controller="Access" asp-action="ThemThongTinNguoiDung" asp-route-idnha="@Model.thongTinNha.MaNha">Send Message</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,60 +224,4 @@
         </div>
     </div>
 </section><!-- End Property Single-->
-
-<!--Comment-->
-<div class="col-md-10 offset-md-1 col-lg-10 offset-lg-1" >
-    <div class="title-box-d">
-        <h3 class="title-d">Đánh giá nhà</h3>
-    </div>
-    @{
-        string strCmt = "Không có bình luận nào về nhà này";
-        if (Model.ListDanhGia.Count != 0)
-        {
-            <div class="box-comments">
-                <ul class="list-comments">
-                    @for (int i = 0; i < Model.ListDanhGia.Count; i++)
-                        {
-                        <li>
-                            <div class="comment-avatar">
-                                <img src="../Images/@Model.ListNguoiDung[i].AnhNguoiDung" alt="">
-                            </div>
-                            <div class="comment-details">
-                                <h4 class="comment-author">@Model.ListNguoiDung[i].TenNguoiDung</h4>
-                                <span>@Model.ListDanhGia[i].NgayDanhGia</span>
-                                <p class="comment-description">
-                                    @Model.ListDanhGia[i].NoiDung
-                                </p>
-                            </div>
-                        </li>
-                    }
-        </ul>
-    </div>
-            
-        } else
-        {
-            <h5>@strCmt</h5>
-        }
-    }
-
-    <div class="form-comments" style="margin-top:50px">
-        <div class="title-box-d">
-            <h3 class="title-d">Viết đánh giá</h3>
-        </div>
-        <form class="form-a">
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <div class="form-group">
-                        <label for="textMessage"><h3>Nhập nội dung</h3></label>
-                        <textarea id="textMessage" class="form-control" placeholder="Nội dung" name="message" cols="45" rows="8" required=""></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-a" asp-action="Index" asp-controller="Home">Gửi</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-</div>
 

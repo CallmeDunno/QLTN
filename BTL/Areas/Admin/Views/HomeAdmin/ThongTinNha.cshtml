@@ -15,7 +15,7 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
+            <tr class="table-danger">
                 <th>
                     @Html.DisplayNameFor(model => model[0].MaNha)
                 </th>
@@ -65,9 +65,18 @@
             </tr>
         </thead>
         <tbody>
+            @{
+                int i = 1;
+            }
             @foreach (var item in Model)
             {
-                <tr>
+                i = i + 1;
+                string cls = "table-info";
+                if (i % 2 == 0)
+                {
+                    cls = "table-success";
+                }
+                <tr class="@cls">
                     <td>
                         @Html.DisplayFor(modelItem => item.MaNha)
                     </td>

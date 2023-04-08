@@ -8,83 +8,35 @@ namespace BTL.Controllers
     public class AccessController : Controller
     {
         QltnContext db = new QltnContext();
+
+        [Route("ThemThongTinNguoiDung")]
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult ThemThongTinNguoiDung(int idnha)
         {
-            if (HttpContext.Session.GetString("UserName") == null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-        [HttpPost]
-        public IActionResult Login(NguoiDung user)
-        {
-            if (HttpContext.Session.GetString("UserName") == null)
-            {
-                var u = db.NguoiDungs.Where(x => x.TenNguoiDung.Equals(user.TenNguoiDung) && x.MatKhau.Equals(user.MatKhau)).FirstOrDefault();
-                if (u != null)
-                {
-                    HttpContext.Session.SetString("UserName", u.TenNguoiDung.ToString());
-                    return RedirectToAction("Index", "Home");
-                }
-            }
+            int x = idnha;
             return View();
         }
 
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            HttpContext.Session.Remove("UserName");
-            return RedirectToAction("Index", "Home");
-        }
-
-        /*[HttpPost]
-        public ActionResult Register(NguoiDung user)
+        [Route("ThemThongTinNguoiDung")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemThongTinNguoiDung(NguoiDung nguoidung)
         {
             if (ModelState.IsValid)
             {
-                try
+                db.NguoiDungs.Add(nguoidung);
+                ThongTinNha nha = db.ThongTinNhas.Find();
+                if (nha != null)
                 {
-                    // Kiểm tra xem tài khoản đã tồn tại chưa
-                    var u = db.NguoiDungs.FirstOrDefault(u => u.TenNguoiDung == user.TenNguoiDung);
-                    if (u != null)
-                    {
-                        ModelState.AddModelError("TenNguoiDung", "Tài khoản đã tồn tại");
-                        return View();
-                    }
-
-                    // Tạo mới đối tượng NguoiDung và lưu vào CSDL
-                    var newUser = new NguoiDung
-                    {
-                        TenNguoiDung = user.TenNguoiDung,
-                        MatKhau = user.MatKhau,
-                        Sdt = user.Sdt,
-                        Email = user.Email,
-                        DiaChi = user.DiaChi,
-                        NgaySinh = user.NgaySinh,
-                        NgheNghiep = user.NgheNghiep,
-                        AnhNguoiDung = user.AnhNguoiDung
-                    };
-
-                    db.NguoiDungs.Add(newUser);
-                    db.SaveChanges();
-
-                    // Đăng ký thành công, chuyển hướng đến trang đăng nhập
-                    return RedirectToAction("Login", "Access");
+                    nha.TinhTrangThue = 1;
+                    db.Entry(nha).State = EntityState.Modified;
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "Đã có lỗi xảy ra: " + ex.Message);
-                    return View();
-                }
+                
+                db.SaveChanges();
+                return RedirectToAction("Index", "House");
             }
+            return View(nguoidung);
+        }
 
-            // Dữ liệu không hợp lệ, trả về View với thông tin lỗi
-            return View();
-        }*/
     }
 }
