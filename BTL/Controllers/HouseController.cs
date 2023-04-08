@@ -51,13 +51,6 @@ namespace BTL.Controllers
                                    join dv in db.TaiSans on d.MaTaiSan equals dv.MaTaiSan
                                    where n.MaNha == MaNha
                                    select dv.TenTaiSan).ToList();
-            List<DanhGiaNha> danhGiaNha = (from dgn in db.DanhGiaNhas join n in db.ThongTinNhas on dgn.MaNha equals n.MaNha
-                                           where n.MaNha == MaNha
-                                           select dgn).ToList();
-            List<NguoiDung> nguoidung = (from nd in db.NguoiDungs
-                             join dgn in db.DanhGiaNhas on nd.MaNguoiDung equals dgn.MaNguoiDung
-                             where dgn.MaNha == MaNha
-                             select nd).ToList();
             HouseDetail house = new HouseDetail
             {
                 thongTinNha = nha,
@@ -67,8 +60,6 @@ namespace BTL.Controllers
                 loaiNha = loaiNha,
                 ListDichVu = dichvu,
                 ListTaiSan = taisan,
-                ListDanhGia = danhGiaNha,
-                ListNguoiDung = nguoidung,
             };
 
             if (house == null)
