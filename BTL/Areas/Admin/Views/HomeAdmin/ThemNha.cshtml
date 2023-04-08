@@ -1,0 +1,91 @@
+﻿@model BTL.Models.ThongTinNha
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ThemNha";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm mới nhà</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemNha">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DiaChiNha" class="control-label"></label>
+                <input asp-for="DiaChiNha" class="form-control" />
+                <span asp-validation-for="DiaChiNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienTich" class="control-label"></label>
+                <input asp-for="DienTich" class="form-control" />
+                <span asp-validation-for="DienTich" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GiaPhong" class="control-label"></label>
+                <input asp-for="GiaPhong" class="form-control" />
+                <span asp-validation-for="GiaPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TienDien" class="control-label"></label>
+                <input asp-for="TienDien" class="form-control" />
+                <span asp-validation-for="TienDien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TienNuoc" class="control-label"></label>
+                <input asp-for="TienNuoc" class="form-control" />
+                <span asp-validation-for="TienNuoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TienDatCoc" class="control-label"></label>
+                <input asp-for="TienDatCoc" class="form-control" />
+                <span asp-validation-for="TienDatCoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TinhTrangThue" class="control-label"></label>
+                <input asp-for="TinhTrangThue" class="form-control" />
+                <span asp-validation-for="TinhTrangThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnhMinhHoa" class="control-label"></label>
+                <input asp-for="AnhMinhHoa" class="form-control" />
+                <span asp-validation-for="AnhMinhHoa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDangTai" class="control-label"></label>
+                <input asp-for="NgayDangTai" class="form-control" />
+                <span asp-validation-for="NgayDangTai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaNha" class="control-label"></label>
+                <input asp-for="MoTaNha" class="form-control" />
+                <span asp-validation-for="MoTaNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaDtsd" class="control-label"></label>
+                <select asp-for="MaDtsd" class="form-control" asp-items="ViewBag.MaDtsd"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaLoai" class="control-label"></label>
+                <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoai"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaChuNha" class="control-label"></label>
+                <select asp-for="MaChuNha" class ="form-control" asp-items="ViewBag.MaChuNha"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaMdsd" class="control-label"></label>
+                <select asp-for="MaMdsd" class ="form-control" asp-items="ViewBag.MaMdsd"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ThongTinNha">Quay lại</a>
+</div>
+

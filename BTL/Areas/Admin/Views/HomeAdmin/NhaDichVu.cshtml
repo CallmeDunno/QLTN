@@ -1,53 +1,57 @@
 ﻿@using BTL.Models;
 @using X.PagedList.Mvc.Core;
-@model X.PagedList.IPagedList<DichVu>
+@model X.PagedList.IPagedList<NhaDichVu>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
-    ViewData["Title"] = "ListDichVu";
+    ViewData["Title"] = "NhaDichVu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Thong tin dịch vụ</h1>
-<h2>@TempData["Message"]</h2>
+<h1>Thông tin các dịch vụ của nhà</h1>
+
 <p>
-    <a class="btn btn-primary" asp-action="AddDichVu">Thêm mới</a>
+    <a class="btn btn-primary" asp-action="ThemNhaDichVu">Thêm mới</a>
 </p>
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr class="table-danger">
+            <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].TenDichVu)
+                    @Html.DisplayNameFor(model => model[0].GhiChu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].MaDichVu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].MaNha)
                 </th>
                 <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
-            @{
-                int i = 1;
-            }
             @foreach (var item in Model)
             {
-                i = i + 1;
-                string cls = "table-info";
-                if (i % 2 == 0)
-                {
-                    cls = "table-success";
-                }
-                <tr class="@cls">
+                <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TenDichVu)
+                        @Html.DisplayFor(modelItem => item.GhiChu)
                     </td>
                     <td>
-                        <a asp-action="UpdateDichVu" asp-route-id="@item.MaDichVu">Sửa</a> |
-                        <a asp-action="DeleteDichVu" asp-route-id="@item.MaDichVu">Xóa</a>
+                        @Html.DisplayFor(modelItem => item.MaDichVu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaNha)
+                    </td>
+                    <td>
+                        <a asp-action="SuaNhaDichVu" asp-route-id1="@item.MaNha" asp-route-id2="@item.MaDichVu">Sửa</a> |
+                        <a asp-action="XoaNhaDichVu" asp-route-id="@item.MaNha">Xóa</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="product__pagination">
-        @Html.PagedListPager(Model, page=>Url.Action("ListDichVu", new{page=page}))
+    <div class="product__pagination" style="margin-top:30px">
+        @Html.PagedListPager(Model, page=>Url.Action("NhaDichVu", new{page=page}))
     </div>
 </div>
 <style>
@@ -77,6 +81,3 @@
         font-weight: bold;
     }
 </style>
-
-
-

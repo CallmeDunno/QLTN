@@ -8,44 +8,44 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>DanhMucNguoiDung</h1>
+<h1>Thông tin người dùng</h1>
 
 <p>
-    <a asp-action="ThemNguoiDungMoi">Create New</a>
+    <a class="btn btn-primary" asp-action="ThemNguoiDungMoi">Thêm mới</a>
 </p>
 <p>@TempData["Message"]</p>
 <div class="table-responsive">
 <table class="table">
     <thead>
-        <tr>
+        <tr class="table-danger">
             <th>
-                Tên Người Dùng
+                    @Html.DisplayNameFor(model => model[0].TenNguoiDung)
             </th>
             <th>
-                Mật Khẩu
+                @Html.DisplayNameFor(model => model[0].MatKhau)
             </th>
             <th>
-                Số ĐT
+                    @Html.DisplayNameFor(model => model[0].Sdt)
             </th>
             <th>
-                Email
+                    @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th>
-                Địa Chỉ
+                    @Html.DisplayNameFor(model => model[0].DiaChi)
             </th>
             <th>
-                Ngày Sinh
+                    @Html.DisplayNameFor(model => model[0].NgaySinh)
             </th>
             <th>
-                Nghề Nghiệp
+                    @Html.DisplayNameFor(model => model[0].NgheNghiep)
             </th>
             <th>
-                Ảnh Người DÙng
+                    @Html.DisplayNameFor(model => model[0].AnhNguoiDung)
             </th>
             <th>
-                IS Deleted
+                    @Html.DisplayNameFor(model => model[0].IsDeleted)
             </th>
-            <th></th>
+            <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
@@ -91,16 +91,40 @@
             </td>
             <td>
                 <a asp-action="SuaNguoiDung" asp-route-maNguoiDung="@item.MaNguoiDung">Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.MaNguoiDung">Details</a> |
-                <a asp-action="XoaNguoiDung" asp-route-maNguoiDung="@item.MaNguoiDung">Delete</a>
+                <a asp-action="XoaNguoiDung" asp-route-maNguoiDung="@item.MaNguoiDung">Xóa</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+    <div class="product__pagination">
+        @Html.PagedListPager(Model, page=>Url.Action("DanhMucNguoiDung", new{page=page}))
+    </div>
 </div>
-@Html.PagedListPager(Model,page => Url.Action("DanhMucNguoiDung", new{ page=page}), new
-X.PagedList.Web.Common.PagedListRenderOptions(){
-    LiElementClasses = new List<String> {"page-item"},
-    PageClasses = new List<String> {"page-link"}
-    })
+<style>
+    .pagination li.active {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #b66dff;
+        border-color: #b66dff;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination li {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>
