@@ -35,8 +35,6 @@ public partial class QltnContext : DbContext
 
     public virtual DbSet<NhaTaiSan> NhaTaiSans { get; set; }
 
-    public virtual DbSet<QuanTriVien> QuanTriViens { get; set; }
-
     public virtual DbSet<TaiSan> TaiSans { get; set; }
 
     public virtual DbSet<ThongTinNha> ThongTinNhas { get; set; }
@@ -185,18 +183,6 @@ public partial class QltnContext : DbContext
                 .HasForeignKey(d => d.MaTaiSan)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_NTS_MaTaiSan");
-        });
-
-        modelBuilder.Entity<QuanTriVien>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__QuanTriV__3214EC27251F1659");
-
-            entity.ToTable("QuanTriVien");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
-            entity.Property(e => e.NameAd).HasColumnName("NameAD");
-            entity.Property(e => e.PassAd).HasColumnName("PassAD");
         });
 
         modelBuilder.Entity<TaiSan>(entity =>
