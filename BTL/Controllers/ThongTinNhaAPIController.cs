@@ -18,6 +18,7 @@ namespace BTL.Controllers
                 case 1: return db.ThongTinNhas.OrderBy(x => x.NgayDangTai);
                 case 2: return db.ThongTinNhas.OrderBy(x => x.GiaPhong);
                 case 3: return db.ThongTinNhas.OrderByDescending(x => x.GiaPhong);
+                case 4: return db.ThongTinNhas.Where(x => x.TinhTrangThue == 0);
                 default: return db.ThongTinNhas.ToList();
             }
         }
@@ -30,6 +31,7 @@ namespace BTL.Controllers
                 case 1: return db.ThongTinNhas.Where(x => x.MaChuNha == id).OrderBy(x => x.NgayDangTai);
                 case 2: return db.ThongTinNhas.Where(x => x.MaChuNha == id).OrderBy(x => x.GiaPhong);
                 case 3: return db.ThongTinNhas.Where(x => x.MaChuNha == id).OrderByDescending(x => x.GiaPhong);
+                case 4: return db.ThongTinNhas.Where(x => x.MaChuNha == id && x.TinhTrangThue == 0);
                 default: return db.ThongTinNhas.Where(x => x.MaChuNha == id).ToList();
             }
         }

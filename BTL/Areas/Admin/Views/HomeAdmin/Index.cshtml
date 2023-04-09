@@ -1,4 +1,5 @@
-﻿
+﻿@using BTL.Models;
+@model IEnumerable<ListNhaChuNha>;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -23,36 +24,33 @@
         <div class="col-md-4 stretch-card grid-margin">
             <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
-                    <img src="../../LayoutAdmin//assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                    <img src="../../LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
                     <h4 class="font-weight-normal mb-3">
-                        Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                        Tổng số nhà <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
+                    <h2 class="mb-5">@ViewBag.TongSoNha</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4 stretch-card grid-margin">
             <div class="card bg-gradient-info card-img-holder text-white">
                 <div class="card-body">
-                    <img src="../../LayoutAdmin//assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                    <img src="../../LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
                     <h4 class="font-weight-normal mb-3">
-                        Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                        Tổng số người dùng <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
+                    <h2 class="mb-5">@ViewBag.TongSoNguoiDung</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4 stretch-card grid-margin">
             <div class="card bg-gradient-success card-img-holder text-white">
                 <div class="card-body">
-                    <img src="../../LayoutAdmin//assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                    <img src="../../LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
                     <h4 class="font-weight-normal mb-3">
-                        Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                        Tổng số hợp đồng<br /> đang có hiệu lực <i class="mdi mdi-diamond mdi-24px float-right"></i>
                     </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
+                    <h2 class="mb-5">@ViewBag.TongSoHD</h2>
                 </div>
             </div>
         </div>
@@ -61,146 +59,34 @@
         <div class="col-12 grid-margin">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Recent Tickets</h4>
+                    <h4 class="card-title">Tổng số nhà của các chủ nhà</h4>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th> Assignee </th>
-                                    <th> Subject </th>
-                                    <th> Status </th>
-                                    <th> Last Update </th>
-                                    <th> Tracking ID </th>
+                                <tr class="table-danger">
+                                    <th> Mã chủ nhà </th>
+                                    <th> Tên chủ nhà </th>
+                                    <th> Số nhà sở hữu </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="../../LayoutAdmin//assets/images/faces/face1.jpg" class="me-2" alt="image"> David Grey
-                                    </td>
-                                    <td> Fund is not recieved </td>
-                                    <td>
-                                        <label class="badge badge-gradient-success">DONE</label>
-                                    </td>
-                                    <td> Dec 5, 2017 </td>
-                                    <td> WD-12345 </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../../LayoutAdmin//assets/images/faces/face2.jpg" class="me-2" alt="image"> Stella Johnson
-                                    </td>
-                                    <td> High loading time </td>
-                                    <td>
-                                        <label class="badge badge-gradient-warning">PROGRESS</label>
-                                    </td>
-                                    <td> Dec 12, 2017 </td>
-                                    <td> WD-12346 </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../../LayoutAdmin//assets/images/faces/face3.jpg" class="me-2" alt="image"> Marina Michel
-                                    </td>
-                                    <td> Website down for one week </td>
-                                    <td>
-                                        <label class="badge badge-gradient-info">ON HOLD</label>
-                                    </td>
-                                    <td> Dec 16, 2017 </td>
-                                    <td> WD-12347 </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../../LayoutAdmin//assets/images/faces/face4.jpg" class="me-2" alt="image"> John Doe
-                                    </td>
-                                    <td> Loosing control on server </td>
-                                    <td>
-                                        <label class="badge badge-gradient-danger">REJECTED</label>
-                                    </td>
-                                    <td> Dec 3, 2017 </td>
-                                    <td> WD-12348 </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Project Status</h4>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th> # </th>
-                                    <th> Name </th>
-                                    <th> Due Date </th>
-                                    <th> Progress </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td> 1 </td>
-                                    <td> Herman Beck </td>
-                                    <td> May 15, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> 2 </td>
-                                    <td> Messsy Adam </td>
-                                    <td> Jul 01, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> 3 </td>
-                                    <td> John Richards </td>
-                                    <td> Apr 12, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> 4 </td>
-                                    <td> Peter Meggik </td>
-                                    <td> May 15, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> 5 </td>
-                                    <td> Edward </td>
-                                    <td> May 03, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> 5 </td>
-                                    <td> Ronald </td>
-                                    <td> Jun 05, 2015 </td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @{
+                                    int i = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    i = i + 1;
+                                    string cls = "table-info";
+                                    if (i % 2 == 0)
+                                    {
+                                        cls = "table-success";
+                                    }
+                                    <tr class="@cls">
+                                        <td> @item.machunha </td>
+                                        <td> @item.tenchunha </td>
+                                        <td> @item.sonha </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
