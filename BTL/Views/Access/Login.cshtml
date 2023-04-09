@@ -1,7 +1,7 @@
 ﻿@model BTL.Models.NguoiDung
 
 @{
-    ViewData["Title"] = "ThemThongTinNguoiDung";
+    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_LayoutHouse.cshtml";
 }
 
@@ -11,7 +11,7 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form method="post" asp-action="ThemThongTinNguoiDung">
+            <form method="post" asp-action="Login">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="TenNguoiDung" class="control-label"></label>
@@ -46,8 +46,8 @@
 </div>
 
 <script>
-    function Notify(){
-        alert("Bạn đã thuê nhà thành công!");
+    function Notify() {
+        alert("Bạn đã thêm thông tin cá nhân thành công! Hãy ghi nhớ mã nhà mà bạn muốn thuê và liên hệ với Admin để thuê nhà.");
     }
 </script>
 

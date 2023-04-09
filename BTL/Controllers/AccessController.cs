@@ -9,33 +9,31 @@ namespace BTL.Controllers
     {
         QltnContext db = new QltnContext();
 
-        [Route("ThemThongTinNguoiDung")]
+        [Route("Login")]
         [HttpGet]
-        public IActionResult ThemThongTinNguoiDung(int idnha)
+        public IActionResult Login()
         {
-            int x = idnha;
-            return View();
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
-        [Route("ThemThongTinNguoiDung")]
+        [Route("Login")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ThemThongTinNguoiDung(NguoiDung nguoidung)
+        public IActionResult Login(NguoiDung user)
         {
             if (ModelState.IsValid)
             {
-                db.NguoiDungs.Add(nguoidung);
-                ThongTinNha nha = db.ThongTinNhas.Find();
-                if (nha != null)
-                {
-                    nha.TinhTrangThue = 1;
-                    db.Entry(nha).State = EntityState.Modified;
-                }
-                
+                db.NguoiDungs.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index", "House");
             }
-            return View(nguoidung);
+            return View(user);
         }
 
     }
