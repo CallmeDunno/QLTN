@@ -1,4 +1,5 @@
-﻿using BTL.Models;
+﻿using BTL.Models.Authentication;
+using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,6 @@ namespace BTL.Controllers
                 MucDichSuDungList = mdsd
             };
             viewModelSearch.DiaChiNhaList = db.ThongTinNhas.Select(x => x.DiaChiNha).Distinct().ToList();
-            
 
             List<ThongTinNha> nhas = db.ThongTinNhas.ToList();
             List<ChuNha> chuNhas = (from p in db.ChuNhas
