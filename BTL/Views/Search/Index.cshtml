@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutSearch.cshtml";
+}
+@model ViewModelSearch
+<!--/ Form Search Star /-->
+<div class="container" style="margin-top:150px">
+    <div class="title-box-d">
+        <h3 class="title-d">Tìm Kiếm Nhà</h3>
+    </div>
+    <div class="container form" id="FindHouse">
+        <form class="form-a">
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <div class="form-group mt-3">
+                        <label class="pb-2" for="Type">Loại Nhà</label>
+                        <select class="form-control form-select form-control-a" id="Type" onchange="getMaLoai(this.value)">
+                            <option>--Chọn loại nhà--</option>
+                            @foreach (var item in Model.LoaiNhaList)
+                            {
+                                <option value="@item.MaLoai">@item.TenLoai</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-2">
+                    <div class="form-group mt-3">
+                        <label class="pb-2" for="object">Đối Tượng Sử Dụng</label>
+                        <select class="form-control form-select form-control-a" id="object" onchange="getMaDTSD(this.value)">
+                            <option>--Chọn đối tượng sử dụng--</option>
+                            @foreach (var item in Model.DoiTuongSuDungList)
+                            {
+                                <option value="@item.MaDtsd">@item.TenDtsd</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <div class="form-group mt-3">
+                        <label class="pb-2" for="purpose">Mục Đích Sử Dụng</label>
+                        <select class="form-control form-select form-control-a" id="purpose" onchange="getMaMDSD(this.value)">
+                            <option>--Chọn mục đích sử dụng--</option>
+                            @foreach (var item in Model.MucDichSuDungList)
+                            {
+                                <option value="@item.MaMdsd">@item.TenMdsd</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    @{
+                        var getUrl = "https://localhost:7249/api/searchapi/";
+                    }
+                    <a class="btn btn-b" onclick="searchNha('@getUrl')" style="margin-top:30px">Tìm kiếm</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Property Search Section -->
+<script>
+    var maloai;
+    var dtsd;
+    var mdsd;
+
+    function getMaLoai(ml) {
+        maloai = ml;
+    }
+
+    function getMaDTSD(mdtsd) {
+        dtsd = mdtsd;
+    }
+
+    function getMaMDSD(madtst) {
+        mdsd = madtst;
+    }
+
+    function searchNha(getUrl) {
+        var str = '';
+        alert(getUrl + maloai + '/' + dtsd + '/' + mdsd);
+        $.ajax({
+            type: 'GET',
+            url: getUrl + maloai + '/' + dtsd + '/' + mdsd,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                $.each(data, function (key, val) {
+                    str += `<div class="col-md-4">
+                                <div class="card-box-a card-shadow">
+                                    <div class="img-box-a">
+                                                <img src="../Images/${val.anhMinhHoa}" alt="" class="img-a img-fluid">
+                                    </div>
+                                    <div class="card-overlay">
+                                        <div class="card-overlay-a-content">
+                                            <div class="card-header-a">
+                                                <h2 class="card-title-a">
+                                                    <a href="#">
+                                                            Mã nhà: ${val.maNha}
+                                                        <span class="color-b">
+                                                                <br> ${val.diaChiNha}
+                                                        </span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                            <div class="card-body-a">
+                                                <div class="price-box d-flex">
+                                                            <span class="price-a">Giá phòng | ${val.giaPhong.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 0 })} VND</span>
+                                                </div>
+                                                            <a href="https://localhost:7249/House/HouseDetail?MaNha=`+ `${val.maNha}" class="link-a">
+                                                    Nhấn để xem chi tiết
+                                                    <span class="bi bi-chevron-right"></span>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer-a">
+                                                <ul class="card-info d-flex justify-content-around">
+                                                    <li>
+                                                        <h4 class="card-info-title">Diện tích</h4>
+                                                        <span>
+                ${val.dienTich}
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền điện</h4>
+                                                                <span>${val.tienDien.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 0 })} VND</span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền nước</h4>
+                                                                <span>${val.tienNuoc.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 0 })} VND</span>
+                                                    </li>
+                                                    <li>
+                                                        <h4 class="card-info-title">Tiền đặt cọc</h4>
+                                                            <span>${val.tienDatCoc.toLocaleString('en-US', { style: 'decimal', minimumFractionDigits: 0 })} VND</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                });
+                $('#FindHouse').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText)
+            }
+        });
+    }
+</script>
