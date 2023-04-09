@@ -72,7 +72,7 @@
                                         <div class="card-overlay-a-content">
                                             <div class="card-header-a">
                                                 <h2 class="card-title-a">
-                                                    <a href="property-single.html">
+                                                    <a asp-action="HouseDetail" asp-controller="House" asp-route-MaNha="@item.MaNha">
                                                         <span class="color-b"> @item.DiaChiNha</span>
                                                     </a>
                                                 </h2>
@@ -81,7 +81,7 @@
                                                 <div class="price-box d-flex">
                                                     <span class="price-a">Giá phòng | @item.GiaPhong.ToString("#,##0") VND</span>
                                                 </div>
-                                                <a href="#" class="link-a">
+                                                <a asp-action="HouseDetail" asp-controller="House" asp-route-MaNha="@item.MaNha" class="link-a">
                                                     Nhấn để xem chi tiết
                                                     <span class="bi bi-chevron-right"></span>
                                                 </a>
