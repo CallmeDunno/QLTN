@@ -18,7 +18,20 @@ namespace BTL.Areas.Admin.Controllers
         [Route("index")]
         public IActionResult Index()
         {
-            return View();
+            ViewBag.TongSoNha = db.ThongTinNhas.Count();
+            ViewBag.TongSoNguoiDung = db.NguoiDungs.Count();
+            ViewBag.TongSoHD = db.HopDongNhas.Count();
+            var result = (from cn in db.ChuNhas
+                         join ttn in db.ThongTinNhas on cn.MaChuNha equals ttn.MaChuNha
+                         group ttn by new { ttn.MaChuNha, cn.TenChuNha } into g
+                          orderby g.Count() descending
+                          select new ListNhaChuNha
+                         {
+                             machunha = g.Key.MaChuNha,
+                             tenchunha = g.Key.TenChuNha,
+                             sonha = g.Count()
+                         }).ToList();
+            return View(result);
         }
 
         #region ThongTinNha
