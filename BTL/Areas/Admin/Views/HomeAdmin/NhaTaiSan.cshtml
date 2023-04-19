@@ -1,0 +1,98 @@
+﻿@using BTL.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<NhaTaiSan>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "NhaTaiSan";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thông tin các tài sản của nhà</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="ThemNhaTaiSan">Thêm mới</a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+    <thead>
+        <tr class="table-danger">
+                <th>
+                @Html.DisplayNameFor(model => model[0].MaNha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].MaTaiSan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].GiaTri)
+            </th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+        }
+        @foreach (var item in Model) 
+        {
+             i = i + 1;
+             string cls = "table-info";
+             if (i % 2 == 0)
+             {
+                cls = "table-success";
+             }
+             <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaTaiSan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiaTri)
+                </td>
+                <td>
+                    <a asp-action="SuaNhaTaiSan" asp-route-id1="@item.MaNha" asp-route-id2="@item.MaTaiSan">Sửa</a> |
+                    <a asp-action="XoaNhaTaiSan" asp-route-id="@item.MaNha">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    <div class="product__pagination" style="margin-top:30px">
+        @Html.PagedListPager(Model, page=>Url.Action("NhaDichVu", new{page=page}))
+    </div>
+</div>
+<style>
+    .pagination li.active {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #b66dff;
+        border-color: #b66dff;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pagination li {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #000000;
+        font-weight: bold;
+    }
+</style>

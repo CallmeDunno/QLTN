@@ -1,7 +1,12 @@
+using BTL.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<QltnContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("QltnContext")));
 
 builder.Services.AddSession();
 

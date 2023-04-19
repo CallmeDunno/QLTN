@@ -769,5 +769,77 @@ namespace BTL.Areas.Admin.Controllers
 
         #endregion
         #endregion
+
+        [Route("NhaTaiSan")]
+        public IActionResult NhaTaiSan(int? page)
+        {
+            int pageSize = 12;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var listNhaTS = db.NhaTaiSans.AsNoTracking().ToList();
+            PagedList<NhaTaiSan> lst = new PagedList<NhaTaiSan>(listNhaTS, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        [Route("ThemNhaTaiSan")]
+        [HttpGet]
+        public IActionResult ThemNhaTaiSan()
+        {
+            ViewBag.MaNha = new SelectList(db.ThongTinNhas.ToList(), "MaNha", "MaNha");
+            ViewBag.MaTaiSan = new SelectList(db.TaiSans.ToList(), "MaTaiSan", "TenTaiSan");
+
+            return View();
+        }
+
+        [Route("ThemNhaTaiSan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemNhaTaiSan(NhaTaiSan nhaTaiSan)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.NhaTaiSans.Add(nhaTaiSan);
+                db.SaveChanges();
+                return RedirectToAction("NhaTaiSan");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [Route("SuaNhaTaiSan")]
+        [HttpGet]
+        public IActionResult SuaNhaTaiSan(int id1, int id2)
+        {
+            var nha = db.NhaTaiSans.Where(x => x.MaNha == id1 && x.MaTaiSan == id2).FirstOrDefault();
+            return View(nha);
+        }
+
+        [Route("SuaNhaTaiSan")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaNhaTaiSan(NhaTaiSan nhaTaiSan)
+        {
+            if (!ModelState.IsValid)
+            {
+                db.Entry(nhaTaiSan).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("NhaTaiSan");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [Route("XoaNhaTaiSan")]
+        [HttpGet]
+        public IActionResult XoaNhaTaiSan(int id)
+        {
+            TempData["Message"] = "Dịch vụ đã được xóa khỏi nhà.";
+            db.Remove(db.NhaTaiSans.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("NhaTaiSan");
+        }
     }
 }
